@@ -11,13 +11,21 @@ Warning:
 
 USE master;
 GO
-----Drop and Create your database inside system database and use it
+----Drop and recreate your database 'DataWarehouse' inside system database and use it
 IF EXISTS (SELECT 1 FROM sys.databases WHERE name='DataWarehouse')
 BEGIN
-  
+  ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+  DROP DATABASE DataWarehouse;
+END;
+GO
+----create the database 'DataWarehouse'    
 CREATE DATABASE DataWarehouse;
+GO
+
 USE DataWarehouse;
-----Start creating schemas it is like folder, so start creating schemas for all layers (bronze, silver, gold)
+GO
+
+----Creating Schemas
 Create SCHEMA bronze;
 Go
 Create SCHEMA silver;
